@@ -80,14 +80,14 @@
       <form class="tab-form">
         <mat-label class="blank">Select Group</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let group of groups" [value]="group.name" (onSelectionChange)="onGroupSelectChange('addUserToChannel', group)">
+          <mat-option *ngFor="let group of groups" [value]="group.groupname" (onSelectionChange)="selectgroupid(group)">
             {{group.groupname}}
           </mat-option>
         </mat-select>
         <mat-label class="blank">Select Channel</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let channel of addUserToChannelModal.addToChannelChannels" (onSelectionChange)="onChannelSelectChange('addUserToChannel', channel)">
-            <!-- {{channel.name}} -->
+          <mat-option *ngFor="let channel of addusertothischannel" value="channel.channelname" (onSelectionChange)="onChannelSelectChange('addUserToChannel', channel)">
+            {{channel.channelname}}
           </mat-option>
         </mat-select>
         <mat-label class="blank">Select User</mat-label>

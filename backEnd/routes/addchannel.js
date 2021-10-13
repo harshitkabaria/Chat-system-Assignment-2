@@ -6,12 +6,14 @@ module.exports = function (db,app){
         
         let newChannel = {
             'channelname':req.body.channelname,
+            'groupId':req.body.groupId
         }
+        console.log("sdf",req.body)
         const collection = db.collection('channels')
         //check for duplicate id
         collection.find({'channelname':newChannel.channelname}).count((err,count)=>{
             if(count==0){
-                collection.insertOne(newChannel, (err, dbres)=> {
+                collection.insertOne(req.body, (err, dbres)=> {
                     if(err) throw err;
                     collection.find({}).toArray((err,data)=>{
                         if(err) throw err;

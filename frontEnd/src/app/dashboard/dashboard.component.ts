@@ -28,6 +28,8 @@ export class DashboardComponent implements OnInit {
 
   isthisSuperAdmin: boolean = false ;
 
+  addusertothischannel:any = [];
+
   createGroupModal = {
     name: '',
   };
@@ -50,7 +52,7 @@ export class DashboardComponent implements OnInit {
     userId: [{}],
     addToChannelGroupUsers:[],
     addToChannelChannels: [{}],
-  } || [];
+  } ;
 
   removeUserToChannelModal = {
     channelId: null,
@@ -123,6 +125,7 @@ export class DashboardComponent implements OnInit {
     this.httpClient.get(serverURL+'api/channels').subscribe(data => {
        ;
       this.channels = data;
+      console.log("channeldata",data)
     }, error => {
 
     });
@@ -138,7 +141,11 @@ export class DashboardComponent implements OnInit {
 
     });
   }
+  selectgroupid(group:any){
 
+    this.addusertothischannel = this.channels.filter((item: { groupId: any; }) => item.groupId === group._id)
+
+  }
   onGroupSelectChange(type:any, group:any) {
     console.log(type);
     console.log(group);
@@ -147,9 +154,10 @@ export class DashboardComponent implements OnInit {
       this.createChannelModal.groupId = group._id;
       console.log(this.createChannelModal);
     } else if (type === 'addUserToChannel') {
-      
-      this.addUserToChannelModal.addToChannelChannels = this.channels.filter((item: { group: any; }) => item.group === group.id);
-      this.addUserToChannelModal.userId = [...this.users.userData];
+      debugger
+      this.addUserToChannelModal.addToChannelChannels = this.channels.filter((item: { groupId: any; }) => item.groupId === group._id);
+      this.addUserToChannelModal.userId = [...this.users];
+      debugger
     } else if (type === 'removeUserFromChannel') {
       this.removeUserToChannelModal.removeToChannelChannels = this.channels.filter((item: { group: any; }) => item.group === group.id);
     } else if (type === 'inviteUserToChannel') {
@@ -174,6 +182,7 @@ export class DashboardComponent implements OnInit {
   onUserSelectChange(type: string, user: any) {
     console.log(type);
     console.log(user);
+    debugger;
     if (type === 'addUserToChannel') {
       this.addUserToChannelModal.userId = user.id;
     }
@@ -210,7 +219,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addUserToChannel() {
-    if (this.addUserToChannelModal.channelId && this.addUserToChannelModal.userId) {
+      if (this.addUserToChannelModal.channelId && this.addUserToChannelModal.userId) {
       console.log(this.addUserToChannelModal);
      // this.channels[this.addUserToChannelModal.channelId - 1].users.push(this.addUserToChannelModal.userId);
       this.httpClient.put(serverURL+`api/channels/${this.addUserToChannelModal.channelId}`, {
@@ -246,9 +255,12 @@ export class DashboardComponent implements OnInit {
         users: [],
         name: this.createChannelModal.name,
       });
+      console.log("createchannel",this.channels)
       this.httpClient.post(serverURL+`api/addchannel`, {
+        channelId:this.channels.id,
         channelname: this.createChannelModal.name,
-        groupId:this.createChannelModal.groupId
+        groupId:this.createChannelModal.groupId,
+        users:[],
       }).subscribe(data => {
         console.log(data);
         this.toastr.success(`Channel ${this.createChannelModal.name} has been created`, 'Create Channel Success');

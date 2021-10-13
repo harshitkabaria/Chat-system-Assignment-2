@@ -49,7 +49,7 @@ MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnified
     // require('./routes/deleteuserfromgroup')(db,app, ObjectID);
     // require('./routes/addusertogroup')(db,app);
     // //Channel Routes
-  //  require('./routes/getchannels.js')(db,app);
+    require('./routes/getchannels.js')(db,app);
    require('./routes/addchannel')(db,app);
    require('./routes/addgroupassis')(db,app);
   //  require('./routes/deletechannel')(db,app, ObjectID);
