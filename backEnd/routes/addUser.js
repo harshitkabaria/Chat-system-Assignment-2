@@ -1,5 +1,5 @@
 module.exports = function (db,app){
-    app.post('/api/adduser', function(req,res){
+    app.post('/api/userRegistration', function(req,res){
         if (!req.body){
             return res.sendStatus(400);
         }
