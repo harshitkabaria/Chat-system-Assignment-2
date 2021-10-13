@@ -13,6 +13,7 @@ import { AdduserComponent } from './adduser/adduser.component';
 import{MatSelectModule} from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import {DemoMaterialModule} from './material';
+import { ChatComponent } from './chat/chat.component';
 
 
 
@@ -22,7 +23,8 @@ import {DemoMaterialModule} from './material';
     LoginComponent,
     DashboardComponent,
     ProfileComponent,
-    AdduserComponent
+    AdduserComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
