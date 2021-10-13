@@ -15,6 +15,15 @@ module.exports = function (db,app){
         //check for duplicate id
         collection.find({'username':newUser.username}).count((err,count)=>{
             if(count==0){
+                let newUser = {
+                    'userId':count+1,
+                    'username':req.body.username,
+                    'password':req.body.password,
+                    'email':req.body.email,
+                    'role':req.body.role,
+                    'userImage':req.body.userImage,
+                }     
+                
                 collection.insertOne(newUser, (err, dbres)=> {
                     if(err) throw err;
                     collection.find({}).toArray((err,data)=>{

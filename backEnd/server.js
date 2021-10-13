@@ -39,18 +39,19 @@ MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnified
     //loadUsers()
     //User Routes
     require('./routes/login.js')(db, app); //Auth
-    //require('./routes/getusers.js')(db,app);
+    require('./routes/getusers.js')(db,app);
     require('./routes/adduser.js')(db, app);
    // require('./routes/deleteuser.js')(db, app, ObjectID);
     // //Group Routes
-   // require('./routes/getgroups')(db,app);
-  //  require('./routes/addgroup')(db,app);
-  //  require('./routes/deletegroup')(db,app, ObjectID);
+    require('./routes/getgroups')(db,app);
+   require('./routes/addgroup')(db,app);
+   require('./routes/deletegroup')(db,app, ObjectID);
     // require('./routes/deleteuserfromgroup')(db,app, ObjectID);
     // require('./routes/addusertogroup')(db,app);
     // //Channel Routes
   //  require('./routes/getchannels.js')(db,app);
-  //  require('./routes/addchannel')(db,app);
+   require('./routes/addchannel')(db,app);
+   require('./routes/addgroupassis')(db,app);
   //  require('./routes/deletechannel')(db,app, ObjectID);
     // require('./routes/deletegroupfromchannel')(db,app, ObjectID);
     // require('./routes/addgrouptochannel')(db,app);

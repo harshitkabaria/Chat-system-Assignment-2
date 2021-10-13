@@ -10,6 +10,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
 import { AdduserComponent } from './adduser/adduser.component';
+import{MatSelectModule} from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import {DemoMaterialModule} from './material';
+
+
 
 @NgModule({
   declarations: [
@@ -26,6 +31,9 @@ import { AdduserComponent } from './adduser/adduser.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSelectModule,
+    MatTabsModule,
+    DemoMaterialModule,
     ToastrModule.forRoot()
   ],
   providers: [],
