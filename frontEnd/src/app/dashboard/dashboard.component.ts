@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
 
   channels :any =[];
 
+  channelUser:any = [];
+
   isthisSuperAdmin: boolean = false ;
 
   addusertothischannel:any = [];
@@ -49,16 +51,16 @@ export class DashboardComponent implements OnInit {
 
   addUserToChannelModal = {
     channelId: null,
-    userId: [{}],
+    users: [],
     addToChannelGroupUsers:[],
-    addToChannelChannels: [{}],
+    channelList: [],
   } ;
 
   removeUserToChannelModal = {
     channelId: null,
-    userId: null,
+    users: null,
     removeToChannelGroupUsers: [],
-    removeToChannelChannels: [],
+    channelList: [],
   } || [];
 
   ngOnInit(): void {
@@ -147,27 +149,40 @@ export class DashboardComponent implements OnInit {
 
   }
   onGroupSelectChange(type:any, group:any) {
-    console.log(type);
-    console.log(group);
     if (type === 'createChannel') {
       this.createChannelModal.groupId = group._id;
     } else if (type === 'addUserToChannel') {
-      debugger
-      this.addUserToChannelModal.addToChannelChannels = this.channels.filter((item: { groupId: any; }) => item.groupId === group._id);
-      this.addUserToChannelModal.userId = [...this.users];
-      debugger
+      this.addUserToChannelModal.channelList = this.channels.filter((item: { groupId: any; }) => item.groupId === group._id);
+      
     } else if (type === 'removeUserFromChannel') {
-      this.removeUserToChannelModal.removeToChannelChannels = this.channels.filter((item: { group: any; }) => item.group === group.id);
+      this.removeUserToChannelModal.channelList = this.channels.filter((item: { group: any; }) => item.group === group.id);
+      
+      
     } else if (type === 'inviteUserToChannel') {
        ;
       this.inviteUserToChannelModel.channels = this.channels.filter((item: { group: any; }) => item.group === group.id);
     }
   }
-
+  getchanneluserId(channel:any){
+    for(let i=0;i<channel.users.length;i++){
+      for(let j=0;j<this.users.length;j++){
+        
+        if(channel.users[i] == this.users[j]._id){
+          
+          this.channelUser.push(this.users[i]);
+         
+        }
+      }
+     
+    }
+    console.log("getchanneluserId",this.channelUser);
+  }
   onChannelSelectChange(type:any, channel:any) {
     if (type === 'removeUserFromChannel') {
-       ;
-      this.removeUserToChannelModal.removeToChannelGroupUsers = channel.users.map((item: number) => this.users.userData[item - 1]);
+       debugger
+      this.removeUserToChannelModal.removeToChannelGroupUsers = channel.users.filter((item: {channel:any}) => channel.users.userId ==  this.users._id);
+      this.removeUserToChannelModal.users = this.users.filter();
+      
       this.removeUserToChannelModal.channelId = channel.id;
     }  else if (type === 'inviteUserToChannel') {
        ;
@@ -180,12 +195,11 @@ export class DashboardComponent implements OnInit {
   onUserSelectChange(type: string, user: any) {
     console.log(type);
     console.log(user);
-    debugger;
     if (type === 'addUserToChannel') {
-      this.addUserToChannelModal.userId = user.id;
+      this.addUserToChannelModal.users = user._id;
     }
     if (type === 'removeUserFromChannel') {
-      this.removeUserToChannelModal.userId = user.id;
+      this.removeUserToChannelModal.users = user._id;
     }
   }
 
@@ -217,12 +231,15 @@ export class DashboardComponent implements OnInit {
   }
 
   addUserToChannel() {
-      if (this.addUserToChannelModal.channelId && this.addUserToChannelModal.userId) {
+      if (this.addusertothischannel && this.addUserToChannelModal.users) {
       console.log(this.addUserToChannelModal);
      // this.channels[this.addUserToChannelModal.channelId - 1].users.push(this.addUserToChannelModal.userId);
-      this.httpClient.put(serverURL+`api/channels/${this.addUserToChannelModal.channelId}`, {
-        userId: this.addUserToChannelModal.userId,
+      this.httpClient.post(serverURL+`api/addUserTochannel`, {
+        channelId: this.addusertothischannel[0]._id,
+        userId: this.addUserToChannelModal.users,
       }).subscribe(data => {
+        this.addusertothischannel = '';
+        this.channels = data;
         this.toastr.success(`User has been added`, 'Add User To Channel Success');
       }, error => {
 
@@ -232,10 +249,12 @@ export class DashboardComponent implements OnInit {
 
   removeFromChannel() {
     console.log(this.removeUserToChannelModal);
-    if (this.removeUserToChannelModal.channelId && this.removeUserToChannelModal.userId) {
-    //  remove(this.channels[this.removeUserToChannelModal.channelId - 1].users, item => item === this.removeUserToChannelModal.userId);
-      this.removeUserToChannelModal.removeToChannelGroupUsers = [];
-      this.httpClient.get(serverURL+`api/channels/${this.removeUserToChannelModal.channelId}/users/${this.removeUserToChannelModal.userId}`).subscribe(data => {
+    debugger;
+    if (this.addusertothischannel[0]._id && this.removeUserToChannelModal.users) {
+      this.httpClient.post(serverURL+`api/removeUserFromChannel`,{
+        channelId : this.addusertothischannel[0]._id ,
+        userId:this.removeUserToChannelModal.users
+      }).subscribe(data => {
         this.toastr.success(`User has been removed`, 'Remove User From Channel Success');
       }, error => {
 

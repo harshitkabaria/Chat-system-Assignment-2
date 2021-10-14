@@ -52,6 +52,9 @@ MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnified
    require('./routes/addchannel')(db,app);
    require('./routes/addgroupassis')(db,app,ObjectID);
     require('./routes/deletechannel')(db,app);
+    require('./routes/addUserTochannel')(db,app,ObjectID);
+    require('./routes/removeUserFromChannel')(db,app,ObjectID);
+
     // //Chat Routes
      require('./routes/getchats')(db,app);
      require('./routes/addchat')(db,app);

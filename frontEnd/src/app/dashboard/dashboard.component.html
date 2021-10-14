@@ -95,14 +95,14 @@
         </mat-select>
         <mat-label class="blank">Select Channel</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let channel of addusertothischannel" value="channel.channelname" (onSelectionChange)="onChannelSelectChange('addUserToChannel', channel)">
+          <mat-option *ngFor="let channel of addusertothischannel" [value]="channel.channelname" (onSelectionChange)="onChannelSelectChange('addUserToChannel', channel)">
             {{channel.channelname}}
           </mat-option>
         </mat-select>
         <mat-label class="blank">Select User</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let user of removeUserToChannelModal.removeToChannelGroupUsers"  (onSelectionChange)="onUserSelectChange('addUserToChannel', user)">
-            <!-- {{user.name}} -->
+          <mat-option *ngFor="let user of users"  [value]="user.username" (onSelectionChange)="onUserSelectChange('addUserToChannel', user)">
+            {{user.username}}
           </mat-option>
         </mat-select>
         <button mat-raised-button color="primary" (click)="addUserToChannel()">Add User To Channel</button>
@@ -112,20 +112,20 @@
       <form class="tab-form">
         <mat-label class="blank">Select Group</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let group of groups" [value]="group.groupname" (onSelectionChange)="onGroupSelectChange('removeUserFromChannel', group)">
+          <mat-option *ngFor="let group of groups" [value]="group.groupname" (onSelectionChange)="selectgroupid(group)">
             {{group.groupname}}
           </mat-option>
         </mat-select>
         <mat-label class="blank">Select Channel</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let channel of removeUserToChannelModal.removeToChannelChannels" (onSelectionChange)="onChannelSelectChange('removeUserFromChannel', channel)">
-             <!-- {{channel.name}}  -->
+          <mat-option *ngFor="let channel of addusertothischannel" [value]="channel.channelname" (onSelectionChange)="getchanneluserId(channel)">
+              {{channel.channelname}} 
           </mat-option>
         </mat-select>
         <mat-label class="blank">Select User</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let user of removeUserToChannelModal.removeToChannelGroupUsers"  (onSelectionChange)="onUserSelectChange('removeUserFromChannel', user)">
-             removeUserToChannelModal 
+          <mat-option *ngFor="let user of channelUser" [value]=user.username  (onSelectionChange)="onUserSelectChange('removeUserFromChannel', user)">
+             {{user.username}} 
           </mat-option>
         </mat-select>
         <button mat-raised-button color="primary" (click)="removeFromChannel()">Remove User from Channel</button>
