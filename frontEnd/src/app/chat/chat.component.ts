@@ -13,44 +13,36 @@ const serverURL = "http://localhost:3000/";
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  groups:any;
-  loggedInUser:any;
-  regGroupObj:any = [];
-  channel:any ;
-  regchannelObj:any = [] ;
-  isgroupChannelSelected:any = false;
-  socket:any;
-  message:any;
-  htmlToAdd:any;
-  messages :any[] = [];
- connection:any;
- dateNow : Date = new Date();
- formatsDateTest: string = 'hh:mm:ss';
+ 
 
   constructor(private router: Router, private httpClient: HttpClient,private socketService: SocketService) { }
+  messagecontent:string | null = ''
+  messages:any[] = [];
+  ioConnection: any;
+  channel:any;
+  groups: any;
+  channels: any[] = [];
+  
+  //the current channel
+  channelName:string = 'Welcome';
+  //the value from the channel selection
+  selectedChannel:string = ''
 
+  currentUsername:string | null = '';
+  currentRole:string | null = '';
   ngOnInit(): void {
+    this.fetchGroup();
+    this.getChannels();
   }
   public fetchGroup(){     
+    this.initToConnection();
     this.httpClient.get(serverURL+'api/groups').subscribe(data => {
       
       this.groups = data;
-      let jLoggedinUser = JSON.parse(this.loggedInUser);
+    
+      //let jLoggedinUser = JSON.parse(this.loggedInUser);
       console.log("chAT",this.groups);
-      for(let i=0;i<this.groups.length;i++){
-        debugger;
-        
-        for(let j=0;j<=this.groups[i].users.length;j++){
-          
-          if(this.groups[i].users[j] == jLoggedinUser.id){
-            this.regGroupObj.push(this.groups[i]);
-            console.log("in for loop",this.regGroupObj )
-          }
-        }
-       
-      }
-      
-      console.log(this.regGroupObj);
+     // console.log(this.regGroupObj);
     }, error => {
 
     });
@@ -59,63 +51,80 @@ export class ChatComponent implements OnInit {
   
 
     }
-    public selectBasedOngroups(groupId:any){
+    private initToConnection(){
+      this.currentUsername = sessionStorage.getItem("username")
+      this.socketService.initSocket();
+  
+      //set obervable to watch for messages.
+      this.ioConnection = this.socketService.onMessage()
+        .subscribe((message:string) => {
+          //Add message to array
+          console.log(message)
+          this.messages.push(message);
+        });
+    }
+  
+  
+    public chat(){
+      if(this.messagecontent){
+  
+        //check message
+        //console.log(this.messagecontent);
+        let currentTime = new Date()
+        this.socketService.send(this.messagecontent);
+        // this.chatService.addChat(this.channelName, this.currentUsername as string, this.messagecontent, currentTime)
+        //   .subscribe((data:any)=> {
+        this.messagecontent = null;
+        //     //this.messages = data;
+        //   })
+        
+      } else {
+        console.log("No message.")
+      }
+  
+    }
+  
+    getChats() {
+      //call join channel function
+      this.leave()
+      this.messages = []
+      this.join()
+      // this.chatService.getChats(this.channelName).subscribe((data: any) => {
+      //   this.messages = data;
+      // });
+      this.selectedChannel = this.channelName
       
+    }
+  
+    join() {
+      this.socketService.join(this.channelName, this.currentUsername);
+    }
+  
+    leave() {
+      this.socketService.leave(this.channelName, this.currentUsername);
+      //this.selectedChannel = "";
+      //this.messages = [];
+      
+    }
+  
+    //Get all group data
+
+    //Get all channels.
+    getChannels() {
       this.httpClient.get(serverURL+'api/channels').subscribe(data => {
         this.channel = data;
-        debugger
-        console.log("this.channel",this.channel)
-        for(let i=0;i<this.channel.length;i++ ){
-          debugger;
-          if(groupId == this.channel[i].group){
-            this.regchannelObj.push(this.channel[i]);
-             
-          }
-        }
-        console.log("this.reggroupObj",this.regGroupObj);
-      }, error => {
-  
+
+      }, error => {  
       });
-
-}
-public isabletochatNow(){
-
-if(this.regchannelObj.length == 0)
-{
-this.isgroupChannelSelected == false;
-}
-
-else{  
-this.isgroupChannelSelected = true
-} 
-}
-
-setupSocketConnection() {
-this.socket = io(serverURL);
-this.socket.on('message-broadcast', (data: string) => {
-  if (data) {
-   const element = document.createElement('li');
-   element.innerHTML = data;
-   element.style.background = 'white';
-   element.style.padding =  '15px 30px';
-   element.style.margin = '10px';
-   document.getElementById('chatboxchat')!.appendChild(element);
-   }
- });
-}
-
-
-sendMessage() {
- ;
-// Pushes message to socketService & logs datetime + user who sent the message.
-let date = new Date();
-let user = JSON.parse(this.loggedInUser).username;
-//let usernamestr = username.replace(/\"/g, ""));
-if (this.message == null || this.message === "") {
-  alert('You must enter a message to send something!');
-} else {
-  this.socketService.chat(user + ":" +this.message );
-  this.message = "";
-}
-}
+      //console.log(this.channels)
+    }
+  
+    // selectChannel(){
+  
+    //   this.leave()
+    //   this.channelName = this.selectedChannel
+      
+    //   this.getChats(this.channelName);
+    //   this.join()
+    // }
 }

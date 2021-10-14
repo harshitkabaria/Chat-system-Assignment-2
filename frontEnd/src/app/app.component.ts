@@ -15,6 +15,7 @@ export class AppComponent {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    debugger
      this.loggedInUser = localStorage.getItem('user');  
   //  if (localStorage.getItem('user') != null) {
   //    this.isLoggedin = true;
@@ -36,7 +37,7 @@ export class AppComponent {
 
   public logout(){   
     localStorage.removeItem('user');
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/');
     window.location.reload();
   
    }

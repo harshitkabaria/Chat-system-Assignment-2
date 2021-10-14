@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
   }
   logout() {
     localStorage.removeItem('user');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/');
   }
 
   isSuperAdmin() {

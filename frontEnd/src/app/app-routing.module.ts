@@ -6,7 +6,7 @@ import { ProfileComponent } from './profile/profile.component'
 import{AdduserComponent} from './adduser/adduser.component'
 import {ChatComponent} from './chat/chat.component'
 const routes: Routes = [
-{path:"login", component: LoginComponent},
+{path:"", component: LoginComponent},
 {path:"dashboard", component:DashboardComponent},
 {path:"profile", component:ProfileComponent},
 {path:"adduser",component:AdduserComponent},
