@@ -6,9 +6,10 @@ module.exports = function(db, app, ObjectID){
         }
         //Get user object being deleted
         let target = req.body;
-        var objectId = new ObjectID(target.id);
+        var objectId = new ObjectID(target.groupId);
         const collection = db.collection('groups');
         //Delete user
+        console.log(objectId);
         collection.deleteOne({_id: objectId}, (err, docs) => {
             if (err) throw err;
             //Get current users

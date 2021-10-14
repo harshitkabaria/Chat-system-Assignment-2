@@ -17,14 +17,23 @@
   <mat-tab-group>
     <!-- super admin  role -->
     <mat-tab *ngIf="isthisSuperAdmin" label="Manage Users">
+        <table>
+            <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            </tr>
       <div *ngFor="let user of users" class="row">
+          
+                          
         <p>{{user.username}}</p>
         <p>{{user.email}}</p>
         <p>{{getRole(user.role)}}</p>
         <button mat-raised-button color="warn" (click)="removeUser(user)" style="width: auto;">remove</button>
-        <button mat-raised-button color="accent" (click)="makeGroupAdmin(user)" style="width: auto;">make group admin</button>
-        <button mat-raised-button color="primary" (click)="makeSuperAdmin(user)" style="width: auto;">make super admin</button>
+        <button mat-raised-button color="accent" (click)="makeGroupSuperAdmin(user,3)" style="width: auto;">make group admin</button>
+        <button mat-raised-button color="primary" (click)="makeGroupSuperAdmin(user,4)" style="width: auto;">make super admin</button>
       </div>
+    </table>
     </mat-tab>
     <!-- group admin role  -->
       <mat-tab *ngIf="isGroupAdmin()" label="Create Group">

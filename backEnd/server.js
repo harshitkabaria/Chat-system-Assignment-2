@@ -41,27 +41,24 @@ MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnified
     require('./routes/login.js')(db, app); //Auth
     require('./routes/getusers.js')(db,app);
     require('./routes/adduser.js')(db, app);
-   // require('./routes/deleteuser.js')(db, app, ObjectID);
+    require('./routes/deleteuser.js')(db, app,ObjectID);
+    require('./routes/changetogrouporadmin')(db, app,ObjectID);
     // //Group Routes
     require('./routes/getgroups')(db,app);
    require('./routes/addgroup')(db,app);
-   require('./routes/deletegroup')(db,app, ObjectID);
-    // require('./routes/deleteuserfromgroup')(db,app, ObjectID);
-    // require('./routes/addusertogroup')(db,app);
+   require('./routes/deletegroup')(db,app,ObjectID);
     // //Channel Routes
     require('./routes/getchannels.js')(db,app);
    require('./routes/addchannel')(db,app);
-   require('./routes/addgroupassis')(db,app);
-  //  require('./routes/deletechannel')(db,app, ObjectID);
-    // require('./routes/deletegroupfromchannel')(db,app, ObjectID);
-    // require('./routes/addgrouptochannel')(db,app);
+   require('./routes/addgroupassis')(db,app,ObjectID);
+    require('./routes/deletechannel')(db,app);
     // //Chat Routes
-    // require('./routes/getchats')(db,app);
-    // require('./routes/addchat')(db,app);
+     require('./routes/getchats')(db,app);
+     require('./routes/addchat')(db,app);
     //Image Routes 
     //require('./routes/addImage')(db,app);
     server.listen(http, port);
-  //  socket.connect(io, port, db);
+    socket.connect(io, port, db);
     
 });
 

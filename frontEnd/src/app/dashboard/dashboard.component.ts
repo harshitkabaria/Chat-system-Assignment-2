@@ -150,9 +150,7 @@ export class DashboardComponent implements OnInit {
     console.log(type);
     console.log(group);
     if (type === 'createChannel') {
-    debugger
       this.createChannelModal.groupId = group._id;
-      console.log(this.createChannelModal);
     } else if (type === 'addUserToChannel') {
       debugger
       this.addUserToChannelModal.addToChannelChannels = this.channels.filter((item: { groupId: any; }) => item.groupId === group._id);
@@ -207,11 +205,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  removeGroup(group:any) {
-    console.log(group);
-     
-    this.httpClient.delete(serverURL+`api/groups/${group.id}`).subscribe(data => {
-     // alert(this.groups, item => item.id === group.id);
+  removeGroup(group:any) {     
+    this.httpClient.post(serverURL+`api/deletegroup`,{
+      groupId : group._id
+    }).subscribe(data => {
+      this.groups = data
       this.toastr.success(`Group has been removed`, '');
     }, error => {
 
@@ -272,7 +270,7 @@ export class DashboardComponent implements OnInit {
 
   addUserToAssis(user:any) {
     this.httpClient.post(serverURL+`api/promotUsertoGroupassis`, {
-      userId: user.userId,
+      userId: user._id,
       role: 2,
     }).subscribe(data => {
       this.users[user.id - 1] = data;
@@ -295,29 +293,23 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  removeUser(user: Users) {
-    this.httpClient.delete(serverURL+`api/users/${user.id}`).subscribe(data => {
+  removeUser(user: any) {
+    this.httpClient.post(serverURL+`api/deleteuser`,{userId: user._id}).subscribe(data => {
       this.toastr.success(`User has been Removed`);
     });
   }
 
-  makeGroupAdmin(user: any) {
-    this.httpClient.put(serverURL+`api/users/${user.id}`, {
-      role: 3,
+  makeGroupSuperAdmin(user: any,role:number) {
+    
+    this.httpClient.post(serverURL+`api/makeGrouporSuperAdmin`, {
+      userId: user._id,
+      role: role,
     }).subscribe(data => {
-      this.users[user.id - 1] = data;
+      this.users = data;
       this.toastr.success('', 'Change User to GroupAdmin');
     }, error => {});
   }
 
-  makeSuperAdmin(user: any) {
-    this.httpClient.put(serverURL+`api/users/${user.id}`, {
-      role: 4,
-    }).subscribe(data => {
-      this.users[user.id - 1] = data;
-      this.toastr.success('', 'Change User to SuperAdmin');
-    }, error => {});
-  }
 
   getRole(role:any) {
     switch (role) {
