@@ -15,23 +15,23 @@ export class AppComponent {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    debugger
      this.loggedInUser = localStorage.getItem('user');  
-  //  if (localStorage.getItem('user') != null) {
-  //    this.isLoggedin = true;
-  //    if(JSON.parse(this.loggedInUser).role == 4){
-  //      this.isSuperAdmin = true;
-  //    }
-  //    else{
-  //      this.isSuperAdmin =false;
-  //    }
-  //  }
-  //  else{
+   if (localStorage.getItem('user') != null) {
+     this.isLoggedin = true;
+     if(JSON.parse(this.loggedInUser).role == 4){
+       
+       this.isSuperAdmin = true;
+     }
+     else{
+       this.isSuperAdmin =false;
+     }
+   }
+   else{
 
-  //    this.isLoggedin = false;
-  //    this.router.navigateByUrl('/login');
+     this.isLoggedin = false;
+     this.router.navigateByUrl('/');
    
-  //  }
+   }
 }
 
 

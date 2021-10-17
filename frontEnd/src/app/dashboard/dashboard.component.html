@@ -17,17 +17,30 @@
   <mat-tab-group>
     <!-- super admin  role -->
     <mat-tab *ngIf="isthisSuperAdmin" label="Manage Users">
-       
-      <div *ngFor="let user of users" class="row">
-          
+      <table class="table" style="border: 1px black solid;">
+        <thead>
+        <tr  style="border: 1px black solid;">
+
+          <th scope="col"  style="border: 1px black solid;">name</th>
+            <th scope="col" style="border: 1px black solid;">email</th>
+              <th scope="col" style="border: 1px black solid;">role</th>
+              <th scope="col" style="border: 1px black solid;">Actions   </th>
+</tr>
+</thead>
+       <tbody>
+<tr *ngFor="let user of users"   style="border: 1px black solid;">          
                           
-        <div>{{user.username}}</div>
-        <div>{{user.email}}</div>
-        <div>{{getRole(user.role)}}</div>
+        <td  style="border: 1px black solid;">{{user.username}}</td>
+        <td  style="border: 1px black solid;">{{user.email}}</td>
+        <td style="border: 1px black solid;">{{getRole(user.role)}}</td>
+        <td style="border: 1px black solid;">
         <button mat-raised-button color="warn" (click)="removeUser(user)" style="width: auto;">remove</button>
         <button mat-raised-button color="accent" (click)="makeGroupSuperAdmin(user,3)" style="width: auto;">make group admin</button>
         <button mat-raised-button color="primary" (click)="makeGroupSuperAdmin(user,4)" style="width: auto;">make super admin</button>
-      </div>
+      </td>  
+      </tr>
+      </tbody>
+      </table>
     
     </mat-tab>
     <!-- group admin role  -->
@@ -42,24 +55,51 @@
       </form>
     </mat-tab>
     <mat-tab *ngIf="isGroupAdmin()" label="Manage Groups">
-      <div *ngFor="let group of groups" class="row">
-        <p>{{group.groupname}}</p>
+      <table class="table" style="border: 1px black solid;">
+        <thead>
+        <tr style="border: 1px black solid;">
+          <th scope="col"  style="border: 1px black solid;">Group Name</th>
+          <th scope="col"  style="border: 1px black solid;">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+      <tr *ngFor="let group of groups" >
+        <td>{{group.groupname}}</td>
+        <td>
         <button mat-raised-button color="warn" (click)="removeGroup(group)" style="width: auto;">remove</button>
-      </div>
+      </td>
+      </tr>
+    </tbody>
+    </table>
     </mat-tab>
 
     <mat-tab *ngIf="isGroupAdmin()" label="Add Group Assis">
-      <div *ngFor="let user of users" class="row">
-        <p>{{user.name}}</p>
-        <mat-label>Select Group</mat-label>
+      <table class="table" style="border: 1px black solid;">
+        <thead>
+        <tr style="border: 1px black solid;">
+          <th scope="col"  style="border: 1px black solid;">User Name</th>
+          <th scope="col"  style="border: 1px black solid;">User Email</th>
+
+          <th scope="col"  style="border: 1px black solid;">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+      <tr *ngFor="let user of users" >
+        <td>{{user.username}}</td>
+        <!-- <mat-label>Select Group</mat-label>
         <mat-select>
           <mat-option *ngFor="let group of groups" [value]="group.groupname">
             {{group.groupname}}
           </mat-option>
-        </mat-select>
-        <p>{{user.email}}</p>
+        </mat-select> -->
+        
+        <td>{{user.email}}</td>
+        <td>
         <button mat-raised-button color="accent" (click)="addUserToAssis(user)" style="width: auto;">add</button>
-      </div>
+      </td>
+      </tr>
+      </tbody>
+      </table>
     </mat-tab>  
     
       <!-- group assis -->
@@ -120,7 +160,7 @@
         </mat-select>
         <mat-label class="blank">Select User</mat-label>
         <mat-select class="blank">
-          <mat-option *ngFor="let user of channelUser" [value]=user.username  (onSelectionChange)="onUserSelectChange('removeUserFromChannel', user)">
+          <mat-option *ngFor="let user of channelUser" [value]=user.username (onSelectionChange)="onUserSelectChange('removeUserFromChannel', user)">
              {{user.username}} 
           </mat-option>
         </mat-select>

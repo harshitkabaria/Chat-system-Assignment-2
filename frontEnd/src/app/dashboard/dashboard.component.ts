@@ -64,6 +64,7 @@ export class DashboardComponent implements OnInit {
   } || [];
 
   ngOnInit(): void {
+
     this.user = localStorage.getItem('user');
     console.log("dashboard",this.user);
     this.getMyGroups();
@@ -164,12 +165,13 @@ export class DashboardComponent implements OnInit {
     }
   }
   getchanneluserId(channel:any){
-    for(let i=0;i<channel.users.length;i++){
+    for(let i=0;i<=channel.users.length;i++){
+      debugger
       for(let j=0;j<this.users.length;j++){
         
         if(channel.users[i] == this.users[j]._id){
-          
-          this.channelUser.push(this.users[i]);
+          debugger;
+          this.channelUser.push(this.users[j]);
          
         }
       }
@@ -238,7 +240,8 @@ export class DashboardComponent implements OnInit {
         channelId: this.addusertothischannel[0]._id,
         userId: this.addUserToChannelModal.users,
       }).subscribe(data => {
-        this.addusertothischannel = '';
+        debugger;
+       // this.addusertothischannel = '';
         this.channels = data;
         this.toastr.success(`User has been added`, 'Add User To Channel Success');
       }, error => {
@@ -293,7 +296,7 @@ export class DashboardComponent implements OnInit {
       role: 2,
     }).subscribe(data => {
       this.users[user.id - 1] = data;
-      this.toastr.success('', 'Change User to Assis');
+      this.toastr.success('', 'Change User to group Assis');
     }, error => {});
   }
 
@@ -315,6 +318,7 @@ export class DashboardComponent implements OnInit {
   removeUser(user: any) {
     this.httpClient.post(serverURL+`api/deleteuser`,{userId: user._id}).subscribe(data => {
       this.toastr.success(`User has been Removed`);
+      this.users = data;
     });
   }
 
