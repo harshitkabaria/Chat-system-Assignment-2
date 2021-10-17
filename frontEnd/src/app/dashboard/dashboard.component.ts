@@ -66,8 +66,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.user = localStorage.getItem('user');
-    console.log("dashboard",this.user);
-    this.getMyGroups();
     this.getAllUsers();
     this.getAllGroups();
     this.getAllChannels();
@@ -134,16 +132,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getMyGroups() {
-    
-    userdata = JSON.parse(this.user)
-    this.httpClient.get(serverURL+`api/groups/user/${userdata.id}`).subscribe(data => {
-      console.log(data);
-      this.myGroups = data;
-    }, error => {
-
-    });
-  }
+ 
   selectgroupid(group:any){
 
     this.addusertothischannel = this.channels.filter((item: { groupId: any; }) => item.groupId === group._id)
