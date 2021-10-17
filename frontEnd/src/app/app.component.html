@@ -46,8 +46,11 @@
        </button>
       
           <button class="btn px-3 me-2 " type="button" routerLink="/dashboard" style="cursor: pointer;">
-           Admin Dashboard
+           Dashboard
           </button>
+          <button class="btn px-3 me-2 " type="button" routerLink="/dashboard" style="cursor: pointer;">
+            Upload Avatar
+           </button>
             <a
               class="nav-link dropdown-toggle d-flex align-items-center"
               href="#"
@@ -65,18 +68,16 @@
               />
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+           
               <li>
-                <button class="dropdown-item"routerLink="/profile">My profile</button>
+                <button class="dropdown-item"routerLink="/profile"  style="cursor: pointer;">Upload Profile Image</button>
               </li>
-              
               <li>
-                <button class="dropdown-item" (click)="logout()">Logout</button>
+                <button class="dropdown-item" (click)="logout()"  style="cursor: pointer;">Logout</button>
               </li>
             </ul>
 
-        <button type="button" (click)="logout()" class="btn px-3 me-2"  style="cursor: pointer;">
-          Logout
-       </button>
+       
       
       </div>
     </div>

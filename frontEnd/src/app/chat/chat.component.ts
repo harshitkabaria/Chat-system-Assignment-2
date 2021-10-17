@@ -20,8 +20,8 @@ export class ChatComponent implements OnInit {
   messages:any[] = [];
   ioConnection: any;
   channel:any;
-  groups: any;
   channels: any[] = [];
+  currentUser:any;
   
   //the current channel
   channelName:string = 'Welcome';
@@ -33,15 +33,18 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.fetchGroup();
     this.getChannels();
+    debugger;
+    this.currentUser = localStorage.getItem('user');
+    this.currentUsername = JSON.parse(this.currentUser).username;
   }
   public fetchGroup(){     
     this.initToConnection();
     this.httpClient.get(serverURL+'api/groups').subscribe(data => {
       
-      this.groups = data;
+      // this.groups = data;
     
       //let jLoggedinUser = JSON.parse(this.loggedInUser);
-      console.log("chAT",this.groups);
+      // console.log("chAT",this.groups);
      // console.log(this.regGroupObj);
     }, error => {
 

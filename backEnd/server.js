@@ -4,6 +4,8 @@ const cors = require('cors')
 const http = require('http').createServer(app);
 const server = require('./listen.js');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+var fileExtension = require('file-extension')
 const MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 const port = process.env.PORT || 3000;
@@ -24,6 +26,8 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
+// Configure Storage
+
 MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopology: true}, function(err, client){
     if (err) {return console.log(err)}
     const dbName = 'assignment2';
@@ -43,6 +47,8 @@ MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnified
     require('./routes/adduser.js')(db, app);
     require('./routes/deleteuser.js')(db, app,ObjectID);
     require('./routes/changetogrouporadmin')(db, app,ObjectID);
+    require('./routes/addImageProfile')(db, app,multer,fileExtension);
+
     // //Group Routes
     require('./routes/getgroups')(db,app);
    require('./routes/addgroup')(db,app);

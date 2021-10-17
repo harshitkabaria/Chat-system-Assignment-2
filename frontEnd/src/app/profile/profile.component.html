@@ -1,7 +1,23 @@
-<label class="image-upload-container btn btn-bwm">
-    <span>Select Image</span>
-    <input #imageInput
-           type="file"
-           accept="image/*"
-           (change)="processFile(imageInput)">
-  </label>
+
+<div class="container" style="margin-top: 230px;">
+    <div class="row">
+        <div class = "col-md-12" style="display: inline-flex;">
+            <form [formGroup]="fileUploadForm" (ngSubmit)="upload()" style="display: flex;">
+
+              
+            <input class="form-control form-control-lg col-md-10" id="customFile"  #UploadFileInput
+            type="file"
+            accept="image/*" name="uploadedImage"
+            (change)="onFileSelect($event)" />
+            
+            <button class="input-group-text col-md-2" type="submit" for="formFileLg" style="margin-left: 10px;">Upload</button>
+            
+            </form>
+            
+        </div>
+        <!-- <div class="preview col-md-4" style="margin-top: 15px;" *ngIf="imgFile">
+            <img [src]="imgFile" style="width:400px; height:250px">
+          </div> -->
+
+        </div>
+</div>

@@ -32,6 +32,7 @@ export class SocketService {
   }
 
   public join(channelname:any, username:any) {
+    debugger;
     this.socket.emit('join', {channelname, username})
   }
 
