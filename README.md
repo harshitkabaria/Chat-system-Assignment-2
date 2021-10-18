@@ -116,26 +116,26 @@ Socket service in client side is used for communication between users.
 The server side handle all the request of client request API and send respective response to client side. To fulfil this purpose in server side, routes has been created and its detail is explained in next section. Server is also responsible for store, retrieve and update data into MongoDB collection.
 
 6.	List of routes, parameters, return values and purpose in the server side
-
-api Routes	Parameters	Return value	Purpose
-/api/auth	None	Boolean 	This authenticates the user login
-/api/userRegistration	None	Copy of that user data 	It adds user to the system
-/api/getAllUsers	None	Array of users	To get all user from the system
-/api/users/:userId	userId	Specific user assigned to that user Id	Each user has unique id, once the id is called to return to respective user
-/api/addGroup	None	Return a copy of that group data	To add a new group to the system
-/api/groups	None	Array of group	To get all the group from the system
-/api/channels	None	Array of channel	To get all the channels from the system
-/api/promoteusertoGroupassis	userId & Role	Return user data	To promote user to group asisst
-/api/inviteUser	None	Return channel data for that user	To invite user to the channel
-/api/channels/:channelId	channelId	Return specific channel data	To get specific channel information
-/api/channels/:channelId/users/:userId	channelId & userId 	Returns channel data for that user	To get the particular user from the specific channel
-/api/addchannel	groupId & channelName	Return all the channel for that group	To create the channels for specific groups
-/api/getchats	channelName	Return chat history for that specific channel	To get chat history for the particular channel
-/api/deleteuser	UserId	Return user data	To delete that particular user
-/api/deletegroup	GroupId	Return group data	To delete that particular group
-/api/deletechannel	ChannelId	Return channel data	To delete that particular channel
-/api/promoteuser	UserId & Role	Return user data	To make any user group admin or super admin
-/api/userImage	UserId & imageURL	Return user data	To upload profile image
+| api Routes | Parameters | Return value | Purpose |
+|--------|-------------|----------|----------|
+| /api/auth | None | Boolean | This authenticates the user login |
+| /api/userRegistration | None | Copy of that user data | It adds user to the system |
+| /api/getAllUsers | None | Array of users |To get all user from the system |
+| /api/users/:userId | userId |Specific user assigned to that user Id | Each user has unique id, once the id is called to return to respective user |
+| /api/addGroup | None | Return a copy of that group data | To add a new group to the system |
+| /api/groups | None | Array of group |To get all the group from the system |
+| /api/channels | None | Array of channel | To get all the channels from the system |
+|/api/promoteusertoGroupassis	|userId & Role	|Return user data	|To promote user to group asisst
+| /api/inviteUser | None | Return channel data for that user | To invite user to the channel |
+| /api/channels/:channelId | channelId | Return specific channel data | To get specific channel information |
+| /api/channels/:channelId/users/:userId | channelId & userId | Returns channel data for that user | To get the particular user from the specific channel |
+|/api/addchannel	|groupId & channelName	|Return all the channel for that group	|To create the channels for specific groups|
+|/api/getchats|	channelName	|Return chat history for that specific channel	|To get chat history for the particular channel|
+|/api/deleteuser	|UserId|	Return user data	|To delete that particular user|
+|/api/deletegroup	|GroupId	|Return group data|	To delete that particular group|
+|/api/deletechannel|	ChannelId	|Return channel data	|To delete that particular channel|
+|/api/promoteuser	|UserId & Role	|Return user data|	To make any user group admin or super admin|
+|/api/userImage|	UserId & imageURL	|Return user data|	To upload profile image|
 Note: If any error occurs it return error in JSON format to client site and success flag as false
 
 7.	Integration between client and server
