@@ -116,6 +116,7 @@ Socket service in client side is used for communication between users.
 The server side handle all the request of client request API and send respective response to client side. To fulfil this purpose in server side, routes has been created and its detail is explained in next section. Server is also responsible for store, retrieve and update data into MongoDB collection.
 
 6.	List of routes, parameters, return values and purpose in the server side
+7.	
 | api Routes | Parameters | Return value | Purpose |
 |--------|-------------|----------|----------|
 | /api/auth | None | Boolean | This authenticates the user login |
