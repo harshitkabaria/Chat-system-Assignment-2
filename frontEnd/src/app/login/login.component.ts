@@ -35,16 +35,14 @@ export class LoginComponent implements OnInit {
         })
         .subscribe((data: any) => {
             if (data.success) {
-            // alert("Login Successful!");
-              console.log("loginpage",data)
               localStorage.setItem('user', JSON.stringify(data));
               
               this.router.navigateByUrl('/dashboard');
-            //  window.location.reload();
+              window.location.reload();
               this.toastr.success(`Login Successful!!`, '');
               //window.location.reload();
             } else {
-              this.toastr.error('Username incorrect!', '');
+              this.toastr.error('Username or password incorrect!');
             }
           },
           () => {

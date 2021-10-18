@@ -18,6 +18,7 @@ export class AppComponent {
      this.loggedInUser = localStorage.getItem('user');  
    if (localStorage.getItem('user') != null) {
      this.isLoggedin = true;
+     this.router.navigateByUrl('/dashboard');
      if(JSON.parse(this.loggedInUser).role == 4){
        
        this.isSuperAdmin = true;
@@ -32,6 +33,7 @@ export class AppComponent {
      this.router.navigateByUrl('/');
    
    }
+  
 }
 
 

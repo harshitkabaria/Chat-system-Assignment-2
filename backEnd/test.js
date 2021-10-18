@@ -45,7 +45,7 @@ describe('Route Testing for the new Group Route', function() {
         it("Should return with a number of inserted records if successful", (done) => {
             chai.request(app).post('/api/addgroup').type('form').send(
                 {"name": "TestingGroup"}).end((err, res) => {
-                    res.body.should.be.a('object');
+                    res.body.should.be.a('array');
                     done();
             });
         });
@@ -69,7 +69,7 @@ describe('Route Testing for the new Channel Route', function() {
                 {"channelname": "TestingChannel", 
                 "groupId": "TestingGroup"
             }).end((err, res) => {
-                res.body.should.be.a('object')
+                res.body.should.be.a('array')
                 done();
             });
         });

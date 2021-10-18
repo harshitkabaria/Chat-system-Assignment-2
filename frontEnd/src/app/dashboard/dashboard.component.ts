@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
 
   isSuperAdmin() {
     
-    if( userdata.role == 4){
+    if( JSON.parse(this.user).role == 4){
       
       this.isthisSuperAdmin = true;
     }
@@ -89,16 +89,15 @@ export class DashboardComponent implements OnInit {
   }
 
   isGroupAdmin() {
-    return userdata.role && userdata.role > 2;
+    return JSON.parse(this.user).role && JSON.parse(this.user).role  > 2;
   }
 
   isGroupAssis() {
-    return userdata.role && userdata.role > 1;
+    return JSON.parse(this.user).role  && JSON.parse(this.user).role  > 1;
   }
 
   isNormalUser(user:any) {
-    
-    return user.role === 1;
+    return user.role  == 1;
   }
 
   getAllGroups() {
@@ -115,8 +114,9 @@ export class DashboardComponent implements OnInit {
     
     
     this.httpClient.get(serverURL+'api/getAllUsers').subscribe(data => {this.users = data
-      this.a=this.users.userData;
-      console.log("all users",this.users.userData);
+      debugger
+      this.a=this.users;
+      console.log("all users",this.users);
     }, error => {
 
     });
@@ -154,19 +154,18 @@ export class DashboardComponent implements OnInit {
     }
   }
   getchanneluserId(channel:any){
-    for(let i=0;i<=channel.users.length;i++){
+    for(let i=0;i<channel.users.length;i++){
       debugger
       for(let j=0;j<this.users.length;j++){
         
         if(channel.users[i] == this.users[j]._id){
-          debugger;
+        
           this.channelUser.push(this.users[j]);
          
         }
       }
      
     }
-    console.log("getchanneluserId",this.channelUser);
   }
   onChannelSelectChange(type:any, channel:any) {
     if (type === 'removeUserFromChannel') {
@@ -201,7 +200,7 @@ export class DashboardComponent implements OnInit {
         name: this.createGroupModal.name,
     }).subscribe(data => {
       console.log(data)
-        this.groups.push(data);
+        this.groups = data;
         this.createGroupModal.name = '';
         this.toastr.success(`Group has been Created`, '');
       }, error => {
@@ -233,6 +232,7 @@ export class DashboardComponent implements OnInit {
        // this.addusertothischannel = '';
         this.channels = data;
         this.toastr.success(`User has been added`, 'Add User To Channel Success');
+        window.location.reload();
       }, error => {
 
       });
@@ -248,6 +248,7 @@ export class DashboardComponent implements OnInit {
         userId:this.removeUserToChannelModal.users
       }).subscribe(data => {
         this.toastr.success(`User has been removed`, 'Remove User From Channel Success');
+        window.location.reload();
       }, error => {
 
       });
@@ -274,6 +275,7 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.toastr.success(`Channel ${this.createChannelModal.name} has been created`, 'Create Channel Success');
         this.createChannelModal.name = '';
+        window.location.reload();
       }, error => {
       });
     }
@@ -286,6 +288,7 @@ export class DashboardComponent implements OnInit {
     }).subscribe(data => {
       this.users[user.id - 1] = data;
       this.toastr.success('', 'Change User to group Assis');
+      window.location.reload();
     }, error => {});
   }
 

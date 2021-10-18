@@ -18,7 +18,6 @@ const io = require('socket.io')(http, {
 const listen = require('./listen');
 const socket = require('./sockets');
 const mongoUrl = 'mongodb://localhost:27017'
-//const loadUsers = require('./data/userData');
 const path = require('path');
 
 //Cors
@@ -40,7 +39,6 @@ MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnified
     // db.createCollection('chats');
 
 
-    //loadUsers()
     //User Routes
     require('./routes/login.js')(db, app); //Auth
     require('./routes/getusers.js')(db,app);
@@ -60,12 +58,9 @@ MongoClient.connect(mongoUrl, {maxPoolSize:10, useNewUrlParser: true, useUnified
     require('./routes/deletechannel')(db,app);
     require('./routes/addUserTochannel')(db,app,ObjectID);
     require('./routes/removeUserFromChannel')(db,app,ObjectID);
-
     // //Chat Routes
      require('./routes/getchats')(db,app);
      require('./routes/addchat')(db,app);
-    //Image Routes 
-    //require('./routes/addImage')(db,app);
     server.listen(http, port);
     socket.connect(io, port, db);
     

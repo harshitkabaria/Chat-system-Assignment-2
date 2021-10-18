@@ -9,6 +9,8 @@
   "author": "Harshit Kabaria",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "file-extension": "^4.0.5",

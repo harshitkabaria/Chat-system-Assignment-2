@@ -16,7 +16,6 @@ module.exports = function (db,app){
         collection.find({'username':newUser.username}).count((err,count)=>{
             if(count==0){
                 let newUser = {
-                    'userId':count+1,
                     'username':req.body.username,
                     'password':req.body.password,
                     'email':req.body.email,

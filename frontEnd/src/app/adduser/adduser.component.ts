@@ -38,7 +38,7 @@ export class AdduserComponent implements OnInit {
 						role: parseInt(this.role)
 					})
 					.subscribe((data: any) => {
-							if (data.success) {	
+							if (!data.ok) {	
 								console.log("user creater data",data)							
                                 this.toastr.success(`User created successfully`, '');
 								this.loginUsername = '';

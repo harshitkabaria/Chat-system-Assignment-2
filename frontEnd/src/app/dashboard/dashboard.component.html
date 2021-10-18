@@ -1,16 +1,11 @@
 <div class="header">
     <div class="my-groups">
       <div>
-        <p style="font-size: 30px">dashboard</p>
+        <p style="font-size: 30px;text-align: center;margin: 40px">Admin Dashboard</p>
       </div>
       
     </div>
-    <div class="my-groups">
-      <p style="font-size: 18px"> my groups: </p>
-      <p *ngFor="let group of myGroups">
-        {{group.name}},
-      </p>
-    </div>
+ 
   
   </div>
   <!-- show groups -->
@@ -90,7 +85,7 @@
         
         <td>{{user.email}}</td>
         <td>
-        <button mat-raised-button color="accent" (click)="addUserToAssis(user)" style="width: auto;">add</button>
+        <button mat-raised-button color="accent" *ngIf="isNormalUser(user)" (click)="addUserToAssis(user)" style="width: auto;">add</button>
       </td>
       </tr>
       </tbody>
